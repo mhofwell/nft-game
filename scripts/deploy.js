@@ -1,5 +1,4 @@
-// latest deploy 0x9C696c99Ccd0Cb55e164eCDF344cCF9fa35FeB60
-
+// latest deploy 0x65354E2A645709Ec6E9012ECfB74b7449634E14A
 const main = async () => {
         const gameContractFactory = await hre.ethers.getContractFactory('GameContract');
         const gameContract = await gameContractFactory.deploy(
@@ -10,29 +9,33 @@ const main = async () => {
                         'ipfs://QmVJK7jt2PHF7NSRsdsFR9AzDGJBzu4MVg2Tp4LgcpoqDZ',
                 ],
                 [200, 500, 175],
-                [500, 190, 1000]
+                [500, 190, 1000],
+                'Evil Warlock',
+                'https://cloudflare-ipfs.com/ipfs/QmYztjGhCPsMWQkeaJqcJB9SYxnp8MviUptd3uTEkDSEEG',
+                10000,
+                50
         );
         await gameContract.deployed();
-        console.log('Contract deployed to Rinkeby at:', gameContract.address);
+        console.log('Contract deployed to:', gameContract.address);
 
         let txn;
-        txn = await gameContract.mintGameNFT(0);
-        await txn.wait();
-        console.log('Minted NFT #1');
-
-        txn = await gameContract.mintGameNFT(1);
-        await txn.wait();
-        console.log('Minted NFT #2');
+        // we only have 3 characters
+        // an NFT w/ the character at index 2 of our array
 
         txn = await gameContract.mintGameNFT(2);
         await txn.wait();
-        console.log('Minted NFT #3');
 
-        txn = await gameContract.mintGameNFT(1);
-        await txn.wait();
-        console.log('Minted NFT #4');
+        // Get the value of the NFT's URI
+        const returnedTokenURI = await gameContract.tokenURI(1);
+        console.log('Token URI', returnedTokenURI);
 
-        console.log('Done deploying and minting!');
+        txn = await gameContract.attackBoss();
+        await txn.wait;
+        console.log('Hit!');
+
+        txn = await gameContract.attackBoss();
+        await txn.wait;
+        console.log('Hit!');
 };
 
 const runMain = async () => {

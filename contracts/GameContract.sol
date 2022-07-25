@@ -38,6 +38,16 @@ contract GameContract is ERC721 {
     // we create a mapping from the NFTs _tokenId => that NFTs attributes.
     mapping(uint256 => Attributes) public nftHolderAttributes;
 
+    struct BigBoss {
+        string name;
+        string imageURI;
+        uint256 hp;
+        uint256 maxHp;
+        uint256 attackDamage;
+    }
+
+    BigBoss public bigBoss;
+
     // A mapping from an address => the NFTs _tokenId. Gives me an easy way to store
     // the owner of the NFT and reference it later.
 
@@ -47,8 +57,31 @@ contract GameContract is ERC721 {
         string[] memory characterNames,
         string[] memory characterImageURIs,
         uint256[] memory characterHp,
-        uint256[] memory characterAttackDmg
+        uint256[] memory characterAttackDmg,
+        string memory bossName,
+        string memory bossImageURI,
+        uint256 bossHp,
+        uint256 bossAttackDamage
     ) ERC721("Legends", "LGND") {
+        // initialize the boss. Save it to our global "BigBoss" state variable.
+
+        bigBoss = BigBoss({
+            name: bossName,
+            imageURI: bossImageURI,
+            hp: bossHp,
+            maxHp: bossHp,
+            attackDamage: bossAttackDamage
+        });
+
+        console.log(
+            "Done initializing boss %s with %s HP, image at %s",
+            bigBoss.name,
+            bigBoss.hp,
+            bigBoss.imageURI
+        );
+
+        // initialize the character attributes for each character.
+
         for (uint256 i = 0; i < characterNames.length; i += 1) {
             startingCharacters.push(
                 Attributes({
@@ -75,6 +108,54 @@ contract GameContract is ERC721 {
         // I increment _tokenIds here so that my first NFT has an ID of 1.
         // More on this in the lesson!
         _tokenIds.increment();
+    }
+
+    function attackBoss() public {
+        uint256 tokenIdOfPlayer = nftHolders[msg.sender];
+        Attributes storage player = nftHolderAttributes[tokenIdOfPlayer];
+        console.log(
+            "\nPlayer with character %s is about to attack. Has %s HP and %s AD",
+            player.name,
+            player.hp,
+            player.attackDamage
+        );
+        console.log(
+            "%s has %s HP an %s AD",
+            bigBoss.name,
+            bigBoss.hp,
+            bigBoss.attackDamage
+        );
+
+        require(player.hp > 0, "Player has no HP Left!.");
+
+        require(bigBoss.hp > 0, "Boss is dead! Hurray!");
+
+        // Allow player to attack boss
+
+        if (bigBoss.hp < player.attackDamage) {
+            bigBoss.hp = 0;
+        } else {
+            bigBoss.hp = bigBoss.hp - player.attackDamage;
+        }
+
+        // Allow boss to attack player
+
+        if (player.hp < bigBoss.attackDamage) {
+            player.hp = 0;
+        } else {
+            player.hp = player.hp - bigBoss.attackDamage;
+        }
+
+        console.log(
+            "Player damaged the %s! %s HP remaining",
+            bigBoss.name,
+            bigBoss.hp
+        );
+        console.log(
+            "%s attacked you! You have %s HP left.",
+            bigBoss.name,
+            player.hp
+        );
     }
 
     // Users would be able to hit this function and get their NFT based on the

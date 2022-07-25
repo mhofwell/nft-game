@@ -3,12 +3,16 @@ const main = async () => {
         const gameContract = await gameContractFactory.deploy(
                 ['Viking', 'Archer', 'Mage'],
                 [
-                        'https://cloudflare-ipfs.com/ipfs/QmRvyM7XTKDWKgUGHZ59qqrzuNF76qbLhSGX34gdoV4o4G',
-                        'https://cloudflare-ipfs.com/ipfs/Qmava7Y9FPqeSs1pRTMJuRTHBPzcasDW73t6nm3v686nht',
-                        'https://cloudflare-ipfs.com/ipfs/QmVJK7jt2PHF7NSRsdsFR9AzDGJBzu4MVg2Tp4LgcpoqDZ',
+                        'ipfs://QmRvyM7XTKDWKgUGHZ59qqrzuNF76qbLhSGX34gdoV4o4G',
+                        'ipfs://QmP2g8emxZM6Vuf55iZ3pfEnNbA148kA5u5CyogGZ6W7we',
+                        'ipfs://QmVJK7jt2PHF7NSRsdsFR9AzDGJBzu4MVg2Tp4LgcpoqDZ',
                 ],
                 [200, 500, 175],
-                [500, 190, 1000]
+                [500, 190, 1000],
+                'Evil Warlock',
+                'https://cloudflare-ipfs.com/ipfs/QmYztjGhCPsMWQkeaJqcJB9SYxnp8MviUptd3uTEkDSEEG',
+                10000,
+                50
         );
         await gameContract.deployed();
         console.log('Contract deployed to:', gameContract.address);
@@ -23,6 +27,12 @@ const main = async () => {
         // Get the value of the NFT's URI
         const returnedTokenURI = await gameContract.tokenURI(1);
         console.log('Token URI', returnedTokenURI);
+
+        txn = await gameContract.attackBoss();
+        await txn.wait;
+
+        txn = await gameContract.attackBoss();
+        await txn.wait;
 };
 
 const runMain = async () => {
