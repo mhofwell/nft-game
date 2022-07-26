@@ -5,7 +5,6 @@ pragma solidity ^0.8.1;
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 
 // Helper functions from OpenZeppelin
-
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/utils/Strings.sol";
 
@@ -16,7 +15,6 @@ import "hardhat/console.sol";
 import "./libraries/Base64.sol";
 
 // Contract inherits from ERC721
-
 contract GameContract is ERC721 {
     struct Attributes {
         uint256 index;

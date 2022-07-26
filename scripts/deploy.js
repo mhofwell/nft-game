@@ -1,4 +1,7 @@
-// latest deploy 0x65354E2A645709Ec6E9012ECfB74b7449634E14A
+// latest deploy 0xb1c8A2E820eE05eC529f82216467105efA32E501 maybe? 0x5FbDB2315678afecb367f032d93F642f64180aa3
+
+const hre = require('hardhat');
+
 const main = async () => {
         const gameContractFactory = await hre.ethers.getContractFactory('GameContract');
         const gameContract = await gameContractFactory.deploy(
@@ -24,18 +27,16 @@ const main = async () => {
 
         txn = await gameContract.mintGameNFT(2);
         await txn.wait();
+        console.log('Character Minted');
+
+        txn = await gameContract.attackBoss();
+        console.log('Attacking Boss!');
+        await txn.wait();
 
         // Get the value of the NFT's URI
         const returnedTokenURI = await gameContract.tokenURI(1);
         console.log('Token URI', returnedTokenURI);
-
-        txn = await gameContract.attackBoss();
-        await txn.wait;
-        console.log('Hit!');
-
-        txn = await gameContract.attackBoss();
-        await txn.wait;
-        console.log('Hit!');
+        console.log('Done!');
 };
 
 const runMain = async () => {
