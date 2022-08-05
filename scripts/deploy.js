@@ -1,4 +1,4 @@
-// latest deploy 0xb1c8A2E820eE05eC529f82216467105efA32E501 maybe? 0x5FbDB2315678afecb367f032d93F642f64180aa3
+// latest deploy 0xF79Db6c68283C52d5EC18d76C05292f025c142dA
 
 const hre = require('hardhat');
 
@@ -20,31 +20,14 @@ const main = async () => {
         );
         await gameContract.deployed();
         console.log('Contract deployed to:', gameContract.address);
-
-        let txn;
-        // we only have 3 characters
-        // an NFT w/ the character at index 2 of our array
-
-        txn = await gameContract.mintGameNFT(2);
-        await txn.wait();
-        console.log('Character Minted');
-
-        txn = await gameContract.attackBoss();
-        console.log('Attacking Boss!');
-        await txn.wait();
-
-        // Get the value of the NFT's URI
-        const returnedTokenURI = await gameContract.tokenURI(1);
-        console.log('Token URI', returnedTokenURI);
-        console.log('Done!');
 };
 
 const runMain = async () => {
         try {
                 await main();
                 process.exit(0);
-        } catch (e) {
-                console.log(e);
+        } catch (error) {
+                console.log(error);
                 process.exit(1);
         }
 };

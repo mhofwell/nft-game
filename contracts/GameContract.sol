@@ -51,6 +51,17 @@ contract GameContract is ERC721 {
 
     mapping(address => uint256) public nftHolders;
 
+    event CharacterNFTMinted(
+        address sender,
+        uint256 tokenId,
+        uint256 characterIndex
+    );
+    event AttackComplete(
+        address sender,
+        uint256 newBossHp,
+        uint256 newPlayerHp
+    );
+
     constructor(
         string[] memory characterNames,
         string[] memory characterImageURIs,
@@ -154,6 +165,10 @@ contract GameContract is ERC721 {
             bigBoss.name,
             player.hp
         );
+
+        // emit event
+
+        emit AttackComplete(msg.sender, bigBoss.hp, player.hp);
     }
 
     // Users would be able to hit this function and get their NFT based on the
@@ -227,5 +242,30 @@ contract GameContract is ERC721 {
 
         // Increment the _tokenId for the next person who uses it.
         _tokenIds.increment();
+
+        // emit event
+
+        emit CharacterNFTMinted(msg.sender, newNFTId, _characterIndex);
+    }
+
+    function returnUsersNFT() public view returns (Attributes memory) {
+        uint256 tokenId = nftHolders[msg.sender];
+
+        if (tokenId > 0) {
+            Attributes storage playerCharacter = nftHolderAttributes[tokenId];
+            return playerCharacter;
+        } else {
+            console.log("You have not yet minted a character!");
+            Attributes memory emptyStruct;
+            return emptyStruct;
+        }
+    }
+
+    function getAllCharacters() public view returns (Attributes[] memory) {
+        return startingCharacters;
+    }
+
+    function getBoss() public view returns (BigBoss memory) {
+        return bigBoss;
     }
 }
