@@ -1,4 +1,4 @@
-// latest deploy 0xab7AE30660B861d7B49B4a5779A530DfDa0EcEE9
+// latest deploy 0x2632efd5CF9d18182Fa6976A1f202622f9d4b55C
 
 const hre = require('hardhat');
 
@@ -14,7 +14,7 @@ const main = async () => {
                 [200, 500, 175],
                 [500, 190, 1000],
                 'Evil Warlock',
-                'https://cloudflare-ipfs.com/ipfs/QmYztjGhCPsMWQkeaJqcJB9SYxnp8MviUptd3uTEkDSEEG',
+                'https://ipfs.io/ipfs/QmYztjGhCPsMWQkeaJqcJB9SYxnp8MviUptd3uTEkDSEEG',
                 10000,
                 50
         );
