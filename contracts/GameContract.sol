@@ -194,7 +194,7 @@ contract GameContract is ERC721 {
                 charAttributes.name,
                 " -- NFT #: ",
                 Strings.toString(_tokenId),
-                '", "description": "HERO NFT from the Legends Collection", "image": "',
+                '", "description": "HERO NFT from the Legends Collection", "image": "ipfs://',
                 charAttributes.imageURI,
                 '", "attributes": [ { "trait_type": "HP", "value": ',
                 strHp,

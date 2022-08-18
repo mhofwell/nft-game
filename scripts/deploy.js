@@ -7,9 +7,9 @@ const main = async () => {
         const gameContract = await gameContractFactory.deploy(
                 ['Viking', 'Archer', 'Mage'],
                 [
-                        'https://ipfs.io/ipfs/QmRvyM7XTKDWKgUGHZ59qqrzuNF76qbLhSGX34gdoV4o4G',
-                        'https://ipfs.io/ipfs/QmP2g8emxZM6Vuf55iZ3pfEnNbA148kA5u5CyogGZ6W7we',
-                        'https://ipfs.io/ipfs/QmVJK7jt2PHF7NSRsdsFR9AzDGJBzu4MVg2Tp4LgcpoqDZ',
+                        'QmRvyM7XTKDWKgUGHZ59qqrzuNF76qbLhSGX34gdoV4o4G',
+                        'QmP2g8emxZM6Vuf55iZ3pfEnNbA148kA5u5CyogGZ6W7we',
+                        'QmVJK7jt2PHF7NSRsdsFR9AzDGJBzu4MVg2Tp4LgcpoqDZ',
                 ],
                 [200, 500, 175],
                 [500, 190, 1000],
